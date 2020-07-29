@@ -21,7 +21,8 @@ image_path = './demo/demo.jpg'
 
 # net init
 nclass = len(params.alphabet) + 1
-model = crnn.CRNN(params.imgH, params.nc, nclass, params.nh)
+print(nclass)
+model = crnn.CRNN(params.imgH, params.nc, nclass, params.nh)    #(32, 1, 2000, 256)
 if torch.cuda.is_available():
     model = model.cuda()
 

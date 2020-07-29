@@ -12,7 +12,6 @@ import sys
 from PIL import Image
 import numpy as np
 
-
 class lmdbDataset(Dataset):
 
     def __init__(self, root=None, transform=None, target_transform=None):
@@ -43,6 +42,7 @@ class lmdbDataset(Dataset):
         index += 1
         with self.env.begin(write=False) as txn:
             img_key = 'image-%09d' % index
+            # print(img_key)
             imgbuf = txn.get(img_key.encode('utf-8'))
 
             buf = six.BytesIO()

@@ -56,7 +56,7 @@ def createDataset(outputPath, imagePathList, labelList, lexiconList=None, checkV
     cache = {}
     cnt = 1
     for i in range(nSamples):
-        imagePath = '/home/work/PY/crnn_2/data/english_l/' + imagePathList[i]
+        imagePath = '/media/dataA/ywzuo/img/' + imagePathList[i]
         label = labelList[i]
         
         if not os.path.exists(imagePath):
@@ -108,7 +108,7 @@ def read_data_from_file(file_path):
         datetemp = line.split(' ', 1)
         if len(datetemp) == 2:
             image_path_list.append(datetemp[0])
-            label_list.append(datetemp[1].replace('\n', '')[:-2])
+            label_list.append(datetemp[1].replace('\n', '')[:])
 
         # line1 = f.readline()
         # line2 = f.readline()
@@ -131,8 +131,8 @@ if __name__ == '__main__':
     # /home/work/PY/crnn_2/data/english_l.txt
     parser = argparse.ArgumentParser()
     parser.add_argument('--out', type = str, default='../data', required = False, help = 'lmdb data output path')
-    parser.add_argument('--folder', type = str, default='/home/work/PY/crnn_2/data/english_l', help = 'path to folder which contains the images')
-    parser.add_argument('--file', type = str,default='/home/work/PY/crnn_2/data/english_l.txt', help = 'path to file which contains the image path and label')
+    parser.add_argument('--folder', type = str, default='/media/dataA/ywzuo/img/', help = 'path to folder which contains the images')
+    parser.add_argument('--file', type = str,default='/media/dataA/ywzuo/img/1.txt', help = 'path to file which contains the image path and label')
     args = parser.parse_args()
     
     if args.file is not None:

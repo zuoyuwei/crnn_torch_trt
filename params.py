@@ -1,12 +1,14 @@
 import alphabets_chinese as alpz
 import alphabets_english as alpe
+import alphabets_test_chinese as altc
+import alphabets_ as al
 # about data and net
-alphabet = alpe.alphabet
+alphabet = altc.alphabet
 keep_ratio = False # whether to keep ratio for image resize
 manualSeed = 1234 # reproduce experiemnt
 random_sample = True # whether to sample the dataset with random sampler
 imgH = 32 # the height of the input image to network
-imgW = 1024 # the width of the input image to network
+imgW = 64 # the width of the input image to network
 nh = 256 # size of the lstm hidden state
 nc = 1
 pretrained = '' # path to pretrained model (to continue training)
@@ -19,15 +21,21 @@ multi_gpu = False # whether to use multi gpu
 ngpu = 1 # number of GPUs to use. Do remember to set multi_gpu to True!
 workers = 0 # number of data loading workers
 
+# # training process
+# displayInterval = 100 # interval to be print the train loss
+# valInterval = 150 # interval to val the model loss and accuray
+# saveInterval = 150 # interval to save model
+# n_val_disp = 10 # number of samples to display when val the model
+
 # training process
-displayInterval = 100 # interval to be print the train loss
-valInterval = 150 # interval to val the model loss and accuray
-saveInterval = 150 # interval to save model
+displayInterval = 1 # interval to be print the train loss
+valInterval = 1 # interval to val the model loss and accuray
+saveInterval = 1000 # interval to save model
 n_val_disp = 10 # number of samples to display when val the model
 
 # finetune
-nepoch = 100 # number of epochs to train for
-batchSize = 128 # input batch size
+nepoch = 1000 # number of epochs to train for
+batchSize = 4 # input batch size
 lr = 0.0001 # learning rate for Critic, not used by adadealta
 beta1 = 0.5 # beta1 for adam. default=0.5
 adam = False # whether to use adam (default is rmsprop)

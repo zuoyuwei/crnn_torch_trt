@@ -21,7 +21,7 @@ import params
 parser = argparse.ArgumentParser()
 parser.add_argument('-train', '--trainroot',default='./data/',
                     required=False, help='path to train dataset')
-parser.add_argument('-val', '--valroot', default='./data',
+parser.add_argument('-val', '--valroot', default='./data/',
                     required=False, help='path to val dataset')
 args = parser.parse_args()
 
@@ -203,6 +203,14 @@ def val(net, criterion):
         utils.loadData(length, l)
 
         preds = crnn(image)
+
+        ## change
+        # preds_size_0 = preds.size(0)
+        # preds_size_1 = preds.size(1)
+        # preds_size_2 = preds.size(2)
+        # preds = preds.view(preds_size_0 // params.ngpu, preds_size_1 * params.ngpu, preds_size_2)
+        ##
+
         preds_size = Variable(torch.LongTensor([preds.size(0)] * batch_size))
         cost = criterion(preds, text, preds_size, length) / batch_size
         loss_avg.add(cost)
@@ -234,16 +242,29 @@ def train(net, criterion, optimizer, train_iter):
     cpu_images, cpu_texts = data
     batch_size = cpu_images.size(0)
     utils.loadData(image, cpu_images)
+    # print(image.shape)
     t, l = converter.encode(cpu_texts)
     utils.loadData(text, t)
+    print('*****************************')
+    print(text.shape)   # torch.size([4,8])
     utils.loadData(length, l)
     
     optimizer.zero_grad()
     preds = crnn(image)
+    print(preds.size)
+
+    ## change
+    # preds_size_0 = preds.size(0)
+    # preds_size_1 = preds.size(1)
+    # preds_size_2 = preds.size(2)
+    # preds = preds.view(preds_size_0 // params.ngpu, preds_size_1 * params.ngpu, preds_size_2)
+    ##
+
     preds_size = Variable(torch.LongTensor([preds.size(0)] * batch_size))
     cost = criterion(preds, text, preds_size, length) / batch_size
     # crnn.zero_grad()
     cost.backward()
+    # print('cost:', cost)
     optimizer.step()
     return cost
 
